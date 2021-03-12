@@ -4,7 +4,7 @@ package demo.example;
 option go_package = "github.com/infraboard/demo/pkg/example";
 
 import "pkg/example/pb/request.proto";
-import "pkg/example/pb/reponse.proto";
+import "pkg/example/pb/response.proto";
 import "github.com/infraboard/mcube/pb/http/entry.proto";
 
 service Service {
