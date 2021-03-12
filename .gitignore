@@ -14,7 +14,5 @@
 cover.out
 coverage.txt
 
-etc/demo.toml
-etc/demo.env
 etc/ssl
 demo

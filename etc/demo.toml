@@ -1,0 +1,36 @@
+[app]
+name = "demo"
+key  = "this is your app key"
+
+[http]
+host = "127.0.0.1"
+port = "8848"
+
+[grpc]
+host = "127.0.0.1"
+port = "18848"
+
+[keyauth]
+host = "127.0.0.1"
+port = "18050"
+client_id = "VYizVq1fsK7olinqVHrBvFOl"
+client_secret = "qS9FGBoFGRaVfbgeqFVDRcgH7nNJi9fp"
+
+[mysql]
+host = "127.0.0.1"
+port = "3306"
+username = "demo"
+password = "xxxx"
+database = "demo"
+
+[mongodb]
+endpoints = ["127.0.0.1:27017"]
+username = "demo"
+password = ""
+database = "demo"
+
+[log]
+level = "debug"
+path = "logs"
+format = "text"
+to = "stdout"
