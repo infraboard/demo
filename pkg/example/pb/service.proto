@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package demo.example;
+option go_package = "github.com/infraboard/demo/pkg/example";
+
+import "pkg/example/pb/request.proto";
+import "pkg/example/pb/reponse.proto";
+import "github.com/infraboard/mcube/pb/http/entry.proto";
+
+service Service {
+	rpc CreateBook(CreateBookRequest) returns(Book) {
+		option (mcube.http.rest_api) = {
+			path: "/applications/"
+			method: "POST"
+			resource: "application"
+			auth_enable: true
+			permission_enable: true
+			labels: [{
+				key: "action"
+				value: "create"
+			}]
+		};
+	};
+}
