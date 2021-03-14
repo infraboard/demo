@@ -3,8 +3,16 @@ syntax = "proto3";
 package demo.example;
 option go_package = "github.com/infraboard/demo/pkg/example";
 
+import "github.com/infraboard/mcube/pb/page/page.proto";
+
 // CreateBookRequest 创建Book请求
 message CreateBookRequest {
-    // 应用名称
+    // book名称
     string name = 1;
+}
+
+// QueryBookRequest 查询Book请求
+message QueryBookRequest {
+    page.PageRequest page = 1;
+    string name = 2;
 }

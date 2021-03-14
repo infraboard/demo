@@ -39,7 +39,7 @@ func NewHTTPService() *HTTPService {
 	return &HTTPService{
 		r:      r,
 		server: server,
-		l:      zap.L().Named("API"),
+		l:      zap.L().Named("HTTP Service"),
 		c:      conf.C(),
 	}
 }

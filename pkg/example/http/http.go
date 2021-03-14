@@ -24,6 +24,7 @@ func (h *handler) Registry(router router.SubRouter) {
 
 	r.BasePath("books")
 	r.Handle("POST", "/", h.CreateBook)
+	r.Handle("GET", "/", h.QueryBook)
 }
 
 func (h *handler) Config() error {

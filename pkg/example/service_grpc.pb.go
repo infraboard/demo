@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
 	CreateBook(ctx context.Context, in *CreateBookRequest, opts ...grpc.CallOption) (*Book, error)
+	QueryBook(ctx context.Context, in *QueryBookRequest, opts ...grpc.CallOption) (*BookSet, error)
 }
 
 type serviceClient struct {
@@ -37,11 +38,21 @@ func (c *serviceClient) CreateBook(ctx context.Context, in *CreateBookRequest, o
 	return out, nil
 }
 
+func (c *serviceClient) QueryBook(ctx context.Context, in *QueryBookRequest, opts ...grpc.CallOption) (*BookSet, error) {
+	out := new(BookSet)
+	err := c.cc.Invoke(ctx, "/demo.example.Service/QueryBook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceServer is the server API for Service service.
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility
 type ServiceServer interface {
 	CreateBook(context.Context, *CreateBookRequest) (*Book, error)
+	QueryBook(context.Context, *QueryBookRequest) (*BookSet, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -51,6 +62,9 @@ type UnimplementedServiceServer struct {
 
 func (UnimplementedServiceServer) CreateBook(context.Context, *CreateBookRequest) (*Book, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBook not implemented")
+}
+func (UnimplementedServiceServer) QueryBook(context.Context, *QueryBookRequest) (*BookSet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryBook not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
@@ -83,6 +97,24 @@ func _Service_CreateBook_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Service_QueryBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryBookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).QueryBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/demo.example.Service/QueryBook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).QueryBook(ctx, req.(*QueryBookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Service_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "demo.example.Service",
 	HandlerType: (*ServiceServer)(nil),
@@ -90,6 +122,10 @@ var _Service_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateBook",
 			Handler:    _Service_CreateBook_Handler,
+		},
+		{
+			MethodName: "QueryBook",
+			Handler:    _Service_QueryBook_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
