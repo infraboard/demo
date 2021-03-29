@@ -18,6 +18,7 @@ func HttpEntry() *http.EntrySet {
 				Resource:         "book",
 				AuthEnable:       true,
 				PermissionEnable: true,
+				AuditLog:         false,
 				Labels:           map[string]string{"action": "create"},
 			},
 			{
@@ -28,6 +29,7 @@ func HttpEntry() *http.EntrySet {
 				Resource:         "book",
 				AuthEnable:       false,
 				PermissionEnable: false,
+				AuditLog:         false,
 				Labels:           map[string]string{},
 			},
 		},
